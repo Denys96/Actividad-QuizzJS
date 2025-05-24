@@ -1,61 +1,141 @@
 import Swal from 'sweetalert2';
+import { quizData } from './todo-quiz'; // Aquí tienes tus preguntas de HTML, CSS y JS juntas
 
 // Variables globales
-let currentSubject = null;
-
-let darkMode = false;
+let currentSubject = null; // Tema actual del cuestionario
+let darkMode = false;      // Estado del modo oscuro
+let currentQuestionIndex = 0; // Índice de pregunta actual
+let score = { value: 0 };     // Puntaje actual
 
 // Elementos del DOM
 const elements = {
-  welcomeScreen: document.getElementById('welcome-screen'),
-  quizScreen: document.getElementById('quiz-screen'),
-  resultScreen: document.getElementById('result-screen'),
-  subjectList: document.getElementById('subject-list'),
-  
-  themeIcon: document.getElementById('theme-icon')
+  welcomeScreen: document.getElementById('welcome-screen'), // Pantalla de bienvenida
+  quizScreen: document.getElementById('quiz-screen'),       // Pantalla del cuestionario
+  resultScreen: document.getElementById('result-screen'),   // Pantalla de resultados
+  subjectList: document.getElementById('subject-list'),     // Lista de temas disponibles
+  themeIcon: document.getElementById('theme-icon')          // Icono para cambiar tema
 };
 
-// Iconos por categoría
+// Iconos para cada categoría
 const categoryIcons = {
-  'HTML': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018383/html_zdnboy.png',
-  'CSS': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018382/css-3_yvevdl.png',
-  'JavaScript': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018382/js_adwar1.png',
-  'Accessibility': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018381/api_fh0fo1.png'
+  'html': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018383/html_zdnboy.png',
+  'css': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018382/css-3_yvevdl.png',
+  'js': 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748018382/js_adwar1.png',
+  'Todo': 'https://res.cloudinary.com/dust9ohqt/image/upload/v1748044221/todo-uno_pitciq.png'
 };
 
-// Inicializar la aplicación
+// Función que muestra cada pregunta en pantalla
+function renderQuestion(elements, currentQuestionIndex, score, callbackShowResults, questions) {
+  const questionData = questions[currentQuestionIndex]; // Pregunta actual
+
+  const quizHTML = `
+    <div class="card p-4 shadow-lg border-0 rounded-4 bg-light">
+      <h4 class="mb-3">Pregunta ${questionData.number} de ${questions.length}</h4>
+      <p class="fs-5 fw-semibold">${questionData.question}</p>
+      <div id="options-container" class="d-flex flex-column gap-3 mb-3">
+        ${questionData.options.map((opt, idx) => `
+          <div class="option-card card p-3 shadow-sm border-0 rounded-3 hover-scale" data-index="${idx}" style="cursor:pointer; transition: all 0.2s;">
+            ${opt}
+          </div>
+        `).join('')}
+      </div>
+      <button id="next-btn" class="btn btn-primary btn-sm px-4 py-2 rounded-pill mt-3" style="width: auto;" disabled>Siguiente</button>
+    </div>
+  `;
+
+  elements.quizScreen.innerHTML = quizHTML;
+
+  const optionCards = elements.quizScreen.querySelectorAll('.option-card');
+  const nextBtn = document.getElementById('next-btn');
+  let selectedIndex = null;
+
+  // Cuando el usuario selecciona una opción
+  optionCards.forEach(card => {
+    card.addEventListener('click', () => {
+      optionCards.forEach(c => c.classList.remove('selected', 'border-primary'));
+      card.classList.add('selected', 'border', 'border-primary');
+      selectedIndex = parseInt(card.dataset.index);
+      nextBtn.disabled = false;
+    });
+  });
+
+  // Cuando el usuario hace clic en "Siguiente"
+  nextBtn.addEventListener('click', () => {
+    if (selectedIndex === null) return;
+
+    if (selectedIndex === questionData.correct) {
+      score.value++;
+    }
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+      renderQuestion(elements, currentQuestionIndex, score, callbackShowResults, questions);
+    } else {
+      callbackShowResults(score.value, questions.length);
+    }
+  });
+}
+
+// Función que muestra la pantalla de resultados
+function showResults(elements, scoreValue, totalQuestions) {
+  elements.quizScreen.classList.add('d-none');     // Oculta preguntas
+  elements.resultScreen.classList.remove('d-none'); // Muestra resultados
+
+  // Aquí mostramos el puntaje final y el botón "Volver al inicio"
+  elements.resultScreen.innerHTML = `
+    <div class="card p-4 text-center shadow-lg bg-light border-0 rounded-4">
+      <h2 class="mb-3">¡Completaste el cuestionario!</h2>
+      <p class="fs-4">Obtuviste <strong>${scoreValue}</strong> de <strong>${totalQuestions}</strong> preguntas correctas.</p>
+      
+      <!-- Contenedor centrado para el botón -->
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-success btn-sm px-4 py-2 rounded-pill mt-4" id="restart-btn">
+          Volver al inicio
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Al hacer clic en el botón, volvemos a la pantalla de bienvenida
+  document.getElementById('restart-btn').addEventListener('click', () => {
+    elements.resultScreen.classList.add('d-none');
+    elements.welcomeScreen.classList.remove('d-none');
+  });
+}
+
+// Inicializar la app (espera a que se cargue todo)
 async function initApp() {
   await loadSubjects();
   setupEventListeners();
 }
 
-// Cargar temas desde la API (mock data por ahora)
+// Cargar lista de temas (simulada con datos ficticios)
 async function loadSubjects() {
   try {
-    // Simular carga de API
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+    await new Promise(resolve => setTimeout(resolve, 500)); // Espera simulada
+
     const mockSubjects = [
       { title: 'HTML', icon: 'html' },
       { title: 'CSS', icon: 'css' },
       { title: 'JavaScript', icon: 'js' },
-      { title: 'Accessibility', icon: 'accessibility' }
+      { title: 'HTML, CSS y JS', icon: 'Todo' }
     ];
 
     renderSubjects(mockSubjects);
   } catch (error) {
     console.error('Error loading subjects:', error);
-    showError('Failed to load quiz subjects. Please try again later.');
+    showError('No se pudieron cargar los temas del cuestionario.');
   }
 }
 
-// Renderizar la lista de temas
+// Mostrar los temas disponibles
 function renderSubjects(subjects) {
   elements.subjectList.innerHTML = subjects.map(subject => `
     <div class="subject-item card shadow-sm mb-3 p-3" data-subject="${subject.title}">
       <div class="d-flex align-items-center">
-        <img src="${categoryIcons[subject.title]}" alt="${subject.title} icon" 
-             class="subject-icon me-3 rounded p-2" style="background-color: var(--bs-primary-bg-subtle)">
+        <img src="${categoryIcons[subject.icon]}" alt="${subject.icon} icon" 
+            class="subject-icon me-3 rounded p-2" style="background-color: var(--bs-primary-bg-subtle)">
         <span class="subject-name fs-5 fw-medium">${subject.title}</span>
         <i class="fas fa-chevron-right ms-auto text-muted"></i>
       </div>
@@ -63,9 +143,9 @@ function renderSubjects(subjects) {
   `).join('');
 }
 
-// Configurar event listeners
+// Eventos del usuario
 function setupEventListeners() {
-  // Selección de tema
+  // Cuando el usuario elige un tema
   elements.subjectList.addEventListener('click', (e) => {
     const subjectItem = e.target.closest('.subject-item');
     if (subjectItem) {
@@ -74,34 +154,53 @@ function setupEventListeners() {
     }
   });
 
-
-
-
   // Cambiar tema claro/oscuro
   elements.themeIcon.addEventListener('click', toggleDarkMode);
 }
 
-// Iniciar el quiz (solo muestra alerta por ahora)
+// Iniciar el cuestionario según el tema seleccionado
 async function startQuiz(subject) {
   try {
     const { value: accept } = await Swal.fire({
-      title: `Start ${subject} Quiz?`,
-      text: "tienes 10 preguntas para responder.",
+      title: `¿Quieres iniciar el quiz de ${subject}?`,
+      text: "Tienes 10 preguntas para responder.",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Empezar cuestionario',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Empezar',
+      cancelButtonText: 'Cancelar',
       reverseButtons: true
     });
 
     if (accept) {
-      // Aquí tus compañeros agregarán la lógica para mostrar quiz-screen
-      Swal.fire({
-        title: 'Empezando Cuestionario!',
-        text: `El ${subject} cuestionario empezara ahora `,
-        icon: 'success'
-      });
+      // 🚧 Aquí van las preguntas del tema combinado (HTML, CSS y JS)
+      if (subject === "HTML, CSS y JS") {
+        elements.welcomeScreen.classList.add('d-none');
+        elements.resultScreen.classList.add('d-none');
+        elements.quizScreen.classList.remove('d-none');
+
+        currentQuestionIndex = 0;
+        score = { value: 0 };
+
+        const questions = quizData; // Aquí se carga el conjunto actual de preguntas
+
+        renderQuestion(
+          elements,
+          currentQuestionIndex,
+          score,
+          (finalScore, total) => showResults(elements, finalScore, total),
+          questions
+        );
+      
+      } else {
+        // 🔧 Tus compañeros pueden usar esta parte para agregar sus propios quizzes
+        Swal.fire({
+          title: 'En construcción',
+          text: `El cuestionario de ${subject} aún no está disponible.`,
+          icon: 'info'
+        });
+      }
     }
+
   } catch (error) {
     console.error('Error iniciando cuestionario:', error);
     showError('Por favor, intente de nuevo.');
@@ -117,36 +216,33 @@ function showError(message) {
   });
 }
 
-// Cambiar tema claro/oscuro
+// Activar/desactivar modo oscuro
 function toggleDarkMode() {
   darkMode = !darkMode;
-  
-  // Alternar clase dark-mode en el body
+
   document.body.classList.toggle('dark-mode', darkMode);
-  
-  // Cambiar icono
-  elements.themeIcon.src = darkMode 
-    ? 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748017294/night-mode_zgyk66.png' 
+
+  elements.themeIcon.src = darkMode
+    ? 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748017294/night-mode_zgyk66.png'
     : 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748017237/brightness_sldegk.png';
-  
-  // Guardar preferencia en localStorage
+
   localStorage.setItem('darkMode', darkMode);
 }
 
-// Verificar preferencia al cargar la página
+// Revisar si el usuario ya tenía modo oscuro activado
 function checkDarkModePreference() {
   const savedMode = localStorage.getItem('darkMode');
   if (savedMode !== null) {
     darkMode = savedMode === 'true';
     document.body.classList.toggle('dark-mode', darkMode);
-    elements.themeIcon.src = darkMode 
+    elements.themeIcon.src = darkMode
       ? 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748017294/night-mode_zgyk66.png'
       : 'https://res.cloudinary.com/dowejnpvd/image/upload/v1748017237/brightness_sldegk.png';
   }
 }
 
-// Inicializar al cargar la página
-document.addEventListener('DOMContentLoaded', checkDarkModePreference);
-
-// Iniciar la aplicación
-document.addEventListener('DOMContentLoaded', initApp);
+// Espera que todo el documento cargue antes de iniciar
+document.addEventListener('DOMContentLoaded', () => {
+  checkDarkModePreference();
+  initApp();
+});
