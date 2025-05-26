@@ -33,7 +33,7 @@ export const quizData = [
         correct: 0
     },
     {
-        number: 14,
+        number: 4,
         question: '¿Cuál es la estructura básica de un documento HTML?',
         options: [
             '&lt;html&gt;&lt;title&gt;&lt;body&gt;',
@@ -42,5 +42,16 @@ export const quizData = [
             '&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;'
         ],
         correct: 3
+    },
+    {
+        number: 5,
+        question: '¿Qué etiqueta se usa para definir una celda de encabezado en una tabla?',
+        options: [
+            '&lt;th&gt;',
+            '&lt;td&gt;',
+            '&lt;tr&gt;',
+            '&lt;thead&gt;'
+        ],
+        correct: 0
     }
 ]
