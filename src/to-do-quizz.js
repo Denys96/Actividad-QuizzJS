@@ -31,5 +31,16 @@ export const quizData = [
             '&lt;important&gt;'
         ],
         correct: 0
+    },
+    {
+        number: 14,
+        question: '¿Cuál es la estructura básica de un documento HTML?',
+        options: [
+            '&lt;html&gt;&lt;title&gt;&lt;body&gt;',
+            '&lt;head&gt;&lt;body&gt;&lt;/body&gt;',
+            '&lt;html&gt;&lt;head&gt;&lt;body&gt;',
+            '&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;'
+        ],
+        correct: 3
     }
 ]
