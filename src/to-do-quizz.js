@@ -20,5 +20,16 @@ export const quizData = [
             'open="true"'
         ],
         correct: 0
+    },
+    {
+        number: 3,
+        question: '¿Cuál etiqueta se utiliza para resaltar texto importante?',
+        options: [
+            '&lt;strong&gt;',
+            '&lt;highlight&gt;',
+            '&lt;mark&gt;',
+            '&lt;important&gt;'
+        ],
+        correct: 0
     }
 ]
