@@ -86,5 +86,16 @@ export const quizData = [
             '&lt;group&gt;'
         ],
         correct: 0
+    },
+    {
+        number: 9,
+        question: '¿Cuál etiqueta HTML se utiliza para incluir contenido multimedia como video?',
+        options: [
+            '&lt;media&gt;',
+            '&lt;vid&gt;',
+            '&lt;video&gt;',
+            '&lt;movie&gt;'
+        ],
+        correct: 2
     }
 ]
