@@ -66,7 +66,7 @@ export const quizData = [
         correct: 2
     },
     {
-        number: 17,
+        number: 7,
         question: '¿Qué etiqueta HTML se usa para insertar una línea horizontal?',
         options: [
             '&lt;line&gt;',
@@ -75,5 +75,16 @@ export const quizData = [
             '&lt;horizontal&gt;'
         ],
         correct: 1
+    },
+    {
+        number: 8,
+        question: '¿Cuál etiqueta se usa para agrupar contenido en bloques en HTML?',
+        options: [
+            '&lt;div&gt;',
+            '&lt;span&gt;',
+            '&lt;block&gt;',
+            '&lt;group&gt;'
+        ],
+        correct: 0
     }
 ]
