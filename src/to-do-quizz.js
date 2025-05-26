@@ -53,5 +53,16 @@ export const quizData = [
             '&lt;thead&gt;'
         ],
         correct: 0
+    },
+    {
+        number: 6,
+        question: '¿Cuál atributo permite especificar un valor por defecto en un campo input?',
+        options: [
+            'placeholder',
+            'default',
+            'value',
+            'input'
+        ],
+        correct: 2
     }
 ]
