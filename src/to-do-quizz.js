@@ -97,5 +97,16 @@ export const quizData = [
             '&lt;movie&gt;'
         ],
         correct: 2
+    },
+    {
+        number: 10,
+        question: '¿Qué etiqueta se usa para crear un campo de entrada de texto en un formulario?',
+        options: [
+            '&lt;text&gt;',
+            '&lt;forminput&gt;',
+            '&lt;input type="text"&gt;',
+            '&lt;textfield&gt;'
+        ],
+        correct: 2
     }
-]
+];
