@@ -64,5 +64,16 @@ export const quizData = [
             'input'
         ],
         correct: 2
+    },
+    {
+        number: 17,
+        question: '¿Qué etiqueta HTML se usa para insertar una línea horizontal?',
+        options: [
+            '&lt;line&gt;',
+            '&lt;hr&gt;',
+            '&lt;br&gt;',
+            '&lt;horizontal&gt;'
+        ],
+        correct: 1
     }
 ]
