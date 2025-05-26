@@ -1,4 +1,4 @@
-export const quizData = [
+export const htmlQuizData = [
     {
         number: 1,
         question: '¿Qué etiqueta HTML se usa para crear una lista desordenada?',

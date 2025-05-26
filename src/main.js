@@ -1,5 +1,8 @@
 import Swal from 'sweetalert2';
 import { quizData } from './todo-quiz'; // Aquí tienes tus preguntas de HTML, CSS y JS juntas
+import { cssQuizData } from './cssQuiz'
+import { jsQuizData } from './jsQuiz'
+import { htmlQuizData } from './htmlQuiz'
 
 // Variables globales
 let currentSubject = null; // Tema actual del cuestionario
@@ -171,9 +174,9 @@ async function startQuiz(subject) {
       reverseButtons: true
     });
 
-    if (accept) {
-      // 🚧 Aquí van las preguntas del tema combinado (HTML, CSS y JS)
-      if (subject === "HTML, CSS y JS") {
+if (accept) {
+    // 🚧 Manejo de los diferentes cuestionarios
+    if (["HTML, CSS y JS", "HTML", "CSS", "JavaScript"].includes(subject)) {
         elements.welcomeScreen.classList.add('d-none');
         elements.resultScreen.classList.add('d-none');
         elements.quizScreen.classList.remove('d-none');
@@ -181,25 +184,41 @@ async function startQuiz(subject) {
         currentQuestionIndex = 0;
         score = { value: 0 };
 
-        const questions = quizData; // Aquí se carga el conjunto actual de preguntas
+        let questions;
+
+        // Seleccionar el conjunto de preguntas según el tema elegido
+        switch (subject) {
+            case "HTML, CSS y JS":
+                questions = [...quizData];
+                break;
+            case "HTML":
+                questions = [...htmlQuizData];
+                break;
+            case "CSS":
+                questions = [...cssQuizData];
+                break;
+            case "JavaScript":
+                questions = [...jsQuizData];
+                break;
+        }
 
         renderQuestion(
-          elements,
-          currentQuestionIndex,
-          score,
-          (finalScore, total) => showResults(elements, finalScore, total),
-          questions
+            elements,
+            currentQuestionIndex,
+            score,
+            (finalScore, total) => showResults(elements, finalScore, total),
+            questions
         );
-      
-      } else {
-        // 🔧 Tus compañeros pueden usar esta parte para agregar sus propios quizzes
+
+    } else {
         Swal.fire({
-          title: 'En construcción',
-          text: `El cuestionario de ${subject} aún no está disponible.`,
-          icon: 'info'
+            title: 'En construcción',
+            text: `El cuestionario de ${subject} aún no está disponible.`,
+            icon: 'info'
         });
-      }
     }
+}
+
 
   } catch (error) {
     console.error('Error iniciando cuestionario:', error);
