@@ -1,0 +1,94 @@
+/* Variables personalizadas */
+:root {
+  --primary-color: #a729f5;
+}
+
+body.dark-mode {
+  background-color: #313e51;
+  color: #ffffff;
+}
+
+body.dark-mode .card {
+  background-color: #3b4d66;
+  color: #ffffff;
+}
+
+body.dark-mode .text-muted {
+  color: #abc1e1 !important;
+}
+
+/* Estilos generales */
+.category-icon, .subject-icon {
+  background-color: var(--primary-color) !important;
+  width: 50px;
+  height: 50px;
+}
+
+.subject-item {
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.subject-item:hover {
+  transform: translateY(-2px);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Ajustes para SweetAlert */
+.swal2-popup {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Estilos para el modo claro (por defecto) */
+body {
+  background-color: #f4f6fa; /* Color claro */
+  color: #313e51; /* Texto oscuro */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode {
+  background-color: #313e51 !important; /* Color oscuro */
+  color: #ffffff; /* Texto claro */
+}
+
+/* Estilos para el icono del tema */
+.theme-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+#next-btn, #restart-btn {
+  width: auto; 
+  max-width: 150px;
+}
+
+.option-card:hover {
+  transform: scale(1.02);
+  background-color: #f8f9fa;
+  border-color: #0d6efd !important;
+}
+
+.selected {
+  background-color: #e7f1ff !important;
+  font-weight: 500;
+}
+
+.dark-mode .card {
+  background-color: #2c2f33 !important;
+  color: #f1f1f1;
+}
+
+.dark-mode .option-card:hover {
+  background-color: #3a3d41 !important;
+}
+
+.dark-mode .selected {
+  background-color: #1e90ff !important;
+  color: white;
+}
