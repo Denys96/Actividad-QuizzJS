@@ -11,14 +11,14 @@ GRUPO 1:
 
 ## ☕ Proyecto: Actividad-QuizzJS
 
-Este proyecto consistió en la creación de un blog temático sobre el café, diseñado y desarrollado usando **HTML5 y CSS3**. A través de este trabajo reforcé mis habilidades en maquetación web, diseño visual y estructura semántica de contenidos.
+Este proyecto consiste en una aplicación web tipo **cuestionario interactivo**, donde el usuario responde preguntas de selección múltiple y recibe una puntuación al finalizar. Fue desarrollado con tecnologías web básicas y buenas prácticas de diseño modular.
 
 ### 🧠 Lo que aprendí:
-- Organizar la estructura de un proyecto con Vite y JavaScript modular.
-- Controlar la navegación entre pantallas de bienvenida, preguntas y resultados.
-- Manejar eventos y lógica de juego para validar respuestas y puntajes.
-- Aplicar librerías externas como SweetAlert2 para mejorar la interacción del usuario.
-- Usar Bootstrap para una interfaz responsiva y visualmente atractiva.
+- Interfaz dinámica con HTML, CSS y JavaScript Vanilla
+- Cambios de pantalla entre bienvenida, preguntas y resultados
+- Alerta de resultado final con **SweetAlert2**
+- Diseño responsivo usando **Bootstrap**
+- Separación de preguntas por tema en un archivo JS
 
 ### 🌐 Enlace al proyecto:
 [🔗 https://actividad-quizz-js.vercel.app/)
