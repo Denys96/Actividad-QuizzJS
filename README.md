@@ -26,10 +26,7 @@ Este proyecto consistió en la creación de un blog temático sobre el café, di
 ### 📸 Capturas del proyecto:
 
 <p align="center">
-  <img src="34shots_so.png" alt="Inicio del blog" width="300"/>
-  <img src="9shots_so.png" alt="Sección Sobre Nosotros" width="300"/>
+  <img src="729shots_so.png" alt="Inicio del QUIZZ" width="300"/>
+  <img src="830shots_so.png" alt="modo movil" width="300"/>
 </p>
-<p align="center">
-  <img src="164shots_so.png" alt="Página de Cursos" width="300"/>
-  <img src="602shots_so.png" alt="Pie de página del blog" width="300"/>
-</p>
+
